@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài đặt Hệ thống - Smart Home</title>
+    <link rel="stylesheet" href="css/components.css"> 
+    <link rel="stylesheet" href="css/dashboard.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="admin-page">
+    
+    <aside class="sidebar">
+        <h2>Cài đặt <i class="fas fa-cogs"></i></h2>
+        <ul class="sidebar-menu">
+            <li><a href="admin.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>Về Trang chủ</span></a></li>
+            <li><a href="#wifi-section" class="nav-link"><i class="fas fa-wifi"></i> <span>Cấu hình Wifi</span></a></li>
+            <li><a href="#rfid-section" class="nav-link"><i class="fas fa-id-card"></i> <span>Quản lý RFID</span></a></li>
+            <li><a href="#email-section" class="nav-link"><i class="fas fa-envelope"></i> <span>Cảnh báo Email</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="dashboard-header">
+            <button id="logout-btn" class="btn btn-danger">Đăng xuất</button>
+        </header>
+
+        <div class="dashboard-sections">
+            
+            <section id="wifi-section" class="card">
+                <h4 class="chart-title"><i class="fas fa-wifi"></i> Quản lý Kết nối Wifi (Raspberry Pi)</h4>
+                
+                <div class="wifi-status-box">
+                    <span>Trạng thái kết nối: </span>
+                    <span id="wifi-current-status" class="status-badge connecting">Đang tải...</span>
+                    <span id="wifi-current-ssid" style="font-weight: bold; margin-left: 10px; color: #007bff;">--</span>
+                </div>
+
+                <div class="saved-networks" style="margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h5>📡 Các mạng Wifi tìm thấy xung quanh</h5>
+                        <small class="text-muted" id="lastScanTime" style="font-size: 0.85rem;">Cập nhật: --</small>
+                    </div>
+                    
+                    <table class="settings-table">
+                        <thead>
+                            <tr>
+                                <th>Tên Wifi (SSID)</th>
+                                <th>Tín hiệu</th>
+                                <th style="text-align: right;">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wifiListBody">
+                            <tr><td colspan="3" class="text-center" style="padding: 20px;">Đang đợi dữ liệu quét từ Raspberry...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="rfid-section" class="card">
+                <h4 class="chart-title"><i class="fas fa-id-card"></i> Quản lý Thẻ Từ (RFID)</h4>
+                
+                <div class="rfid-controls">
+                    <button id="startScanBtn" class="btn btn-success">
+                        <i class="fas fa-satellite-dish"></i> Kích hoạt Chế độ Nạp thẻ
+                    </button>
+                    <div id="scan-status" class="scan-status" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Đang đợi quét thẻ vào cảm biến...
+                    </div>
+                </div>
+
+                <div class="rfid-list-container">
+                    <table class="settings-table">
+                        <thead>
+                            <tr>
+                                <th>Mã UID</th>
+                                <th>Tên chủ thẻ</th>
+                                <th>Ngày tạo</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rfidListBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="email-section" class="card">
+                <h4 class="chart-title"><i class="fas fa-envelope"></i> Cấu hình Email Cảnh báo</h4>
+                <p class="section-description" style="margin-bottom:1rem;color:#64748b;font-size:0.9rem;">
+                    Khi có cảnh báo gas/lửa nghiêm trọng, hệ thống sẽ gửi email từ tài khoản Gmail bên dưới
+                    đến email nhận cảnh báo. Raspberry Pi sẽ tự động cập nhật cấu hình này trong tối đa 5 phút
+                    sau khi bạn lưu, không cần khởi động lại gateway.
+                </p>
+
+                <form id="emailConfigForm">
+                    <div class="form-group">
+                        <label for="emailUserInput">Email gửi cảnh báo (Gmail)</label>
+                        <input type="email" id="emailUserInput" class="input-field" style="width:100%;"
+                               placeholder="vd: smarthome.alert@gmail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailAppPasswordInput">App Password (16 ký tự, không phải mật khẩu Gmail thường)</label>
+                        <div style="display:flex; gap:8px;">
+                            <input type="password" id="emailAppPasswordInput" name="smarthome_email_app_pw_new"
+                                   class="input-field" style="width:100%;" autocomplete="new-password"
+                                   placeholder="Để trống nếu không muốn đổi">
+                            <button type="button" id="toggleAppPasswordBtn" class="btn btn-sm btn-info" style="flex-shrink:0;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <small class="hint-text">
+                            Lấy tại: Google Account → Security → App Passwords. Chỉ cần nhập khi tạo lần đầu hoặc muốn đổi.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailToInput">Email nhận cảnh báo</label>
+                        <input type="text" id="emailToInput" class="input-field" style="width:100%;"
+                               placeholder="a@gmail.com hoặc a@gmail.com,b@gmail.com (cách nhau dấu phẩy)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailCooldownInput">Thời gian chờ giữa 2 lần gửi (giây)</label>
+                        <input type="number" id="emailCooldownInput" class="input-field" style="width:150px;"
+                               min="30" value="120">
+                    </div>
+
+                    <button type="submit" id="emailConfigSaveBtn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu cấu hình
+                    </button>
+
+                    <div id="emailSyncStatus" style="margin-top:12px; font-size:0.85rem; color:#64748b;"></div>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="editCardModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            <h3>Đặt tên cho thẻ</h3>
+            <input type="text" id="cardNameInput" class="input-field" placeholder="Ví dụ: Chìa khóa Bố" style="width: 100%; margin: 15px 0;">
+            <input type="hidden" id="editingCardId">
+            <button class="btn btn-primary" onclick="saveCardName()" style="width: 100%;">Lưu thay đổi</button>
+        </div>
+    </div>
+
+    <div id="wifiConnectModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="closeWifiModal()">&times;</span>
+            <h3>Kết nối Wifi</h3>
+            <p>Nhập mật khẩu cho mạng: <strong id="targetSsidDisplay" style="color:#007bff">...</strong></p>
+            
+            <input type="password" id="wifiPasswordInput" class="input-field" placeholder="Nhập mật khẩu Wifi..." style="width: 100%; margin: 15px 0;">
+            <input type="hidden" id="targetSsidHidden">
+            
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn btn-secondary" onclick="closeWifiModal()" style="flex: 1;">Hủy</button>
+                <button class="btn btn-primary" onclick="confirmConnectWifi()" style="flex: 1;">Kết nối</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/settings.js"></script>
+</body>
+</html>

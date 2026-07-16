@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHome - Đăng Nhập</title>
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="auth-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.svg" alt="SmartHome">
+                <span>SmartHome</span>
+            </div>
+            <a href="index.html" class="nav-link" style="font-size: 0.9rem;">← Về trang chủ</a>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        
+        <div class="auth-card" id="loginCard">
+            <div class="auth-header">
+                <h1>Đăng Nhập</h1>
+                <p>Chào mừng trở lại! Vui lòng đăng nhập.</p>
+            </div>
+
+            <form class="auth-form" id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="nhập email của bạn" autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" placeholder="nhập mật khẩu" autocomplete="current-password">
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember">
+                        <span>Ghi nhớ đăng nhập</span>
+                    </label>
+                    <a href="#" class="forgot-password" style="font-size: 0.9rem; color: var(--primary-color);">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng Nhập</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>hoặc</span>
+            </div>
+
+            <button class="btn btn-google">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+                Đăng nhập với Google
+            </button>
+
+            <div class="auth-footer">
+                <p>Chưa có tài khoản? <a href="#" id="showRegister" style="color: var(--primary-color); font-weight: 600;">Đăng ký ngay</a></p>
+            </div>
+        </div>
+
+        <div class="auth-card hidden" id="registerCard">
+            <div class="auth-header">
+                <h1>Đăng Ký</h1>
+                <p>Tạo tài khoản mới để bắt đầu</p>
+            </div>
+
+            <form class="auth-form" id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="fullName">Họ và tên</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="nhập họ và tên">
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" placeholder="nhập email" autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Mật khẩu</label>
+                    <input type="password" id="regPassword" name="password" placeholder="tạo mật khẩu (min 6 ký tự)" autocomplete="new-password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="nhập lại mật khẩu" autocomplete="new-password">
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" name="terms">
+                        <span style="font-size: 0.9rem;">Tôi đồng ý với <a href="#" style="color: var(--primary-color);">điều khoản sử dụng</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng Ký</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Đã có tài khoản? <a href="#" id="showLogin" style="color: var(--primary-color); font-weight: 600;">Đăng nhập ngay</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>

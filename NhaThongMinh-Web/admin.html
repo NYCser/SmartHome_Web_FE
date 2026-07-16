@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHome - Quản trị Thiết bị</title>
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes doorUnlockedPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35); }
+            50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+        }
+        .door-status-icon.unlocked { animation: doorUnlockedPulse 1.8s ease-in-out infinite; }
+        .door-control-buttons button:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body class="admin-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.svg" alt="SmartHome">
+                <span>SmartHome Admin</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin.html" class="nav-link active">Quản trị</a>
+                </li>
+                
+                <li class="nav-item notification-wrapper">
+                    <a href="#" class="nav-link notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notifyBadge" style="display: none;">0</span> 
+                    </a>
+                    
+                    <div class="notification-dropdown">
+                         <div class="notify-header">
+                             <h3>Thông báo</h3>
+                             <span class="mark-read-btn">Đánh dấu đã đọc</span>
+                        </div>
+                        <div class="notify-content" id="notifyList">
+                            </div>
+                        <div class="notify-footer" style="text-align: center; padding: 10px; border-top: 1px solid #eee;">
+                            <a href="notifications.html" class="view-all-link" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 0.9rem;">Xem tất cả </a>
+                        </div>
+                    </div>
+                    <!-- <div class="notification-dropdown">
+                        <div class="notify-header">
+                            <h3>Thông báo</h3>
+                            <span class="mark-read-btn">Đánh dấu đã đọc</span>
+                        </div>
+                        <div class="notify-content" id="notifyList">
+                            </div>
+                        <div class="notify-footer">
+                            <a href="#">Xem tất cả</a>
+                        </div>
+                    </div>
+                </li> -->
+
+                <li class="nav-item user-menu">
+                    <img src="images/user-avatar.jpg" alt="Admin" class="user-avatar">
+                    <span class="user-name">Admin</span>
+                    <div class="dropdown-menu">
+                        <a href="settings.html" class="dropdown-item">Cài đặt</a>
+                        <a href="#" class="dropdown-item logout">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="nav-overlay"></div>
+
+    <main class="admin-main">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Quản trị Thiết bị Nhà Thông minh</h1>
+                <p>Quản lý và điều khiển tất cả thiết bị trong ngôi nhà của bạn</p>
+                
+                <div class="admin-stats">
+                    <div class="stat-item room-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="roomCount">0</span>
+                            <span class="stat-label">Tổng số phòng</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-item device-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="deviceCount">0</span>
+                            <span class="stat-label">Tổng thiết bị</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-item active-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="activeDeviceCount">--</span>
+                            <span class="stat-label">Hoạt động</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-item power-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">2.3</span>
+                            <span class="stat-label">kW tiêu thụ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="door-control-section" style="margin-bottom: 24px;">
+                <div class="card door-control-card" style="padding: 20px; border-radius: 12px; background:#fff; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+                    <div class="door-control-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                        <h4 class="chart-title" style="margin:0;"><i class="fas fa-door-closed"></i> Cửa Ra Vào (Entrance)</h4>
+                    </div>
+
+                    <div id="doorStatusDisplay" style="display:flex; align-items:center; gap:16px; padding:16px; border-radius:10px; margin-bottom:16px; background:#f1f5f9; transition: background 0.3s ease;">
+                        <div id="doorStatusIcon" class="door-status-icon" style="width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; background:#94a3b8; color:#fff; transition: background 0.3s ease;">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <div>
+                            <div id="doorStatusBadge" style="font-size:1.2rem; font-weight:700; color:#334155;">--</div>
+                            <small id="doorLastAction" class="text-muted" style="display:block; margin-top:2px; color:#94a3b8;"></small>
+                        </div>
+                    </div>
+
+                    <p class="section-description" style="color:#64748b; font-size:0.9rem; margin-bottom:14px;">
+                        Điều khiển khóa cửa chính từ xa (relay tại node entrance_01, dùng chung với hệ thống RFID/Vân tay).
+                    </p>
+                    <div class="door-control-buttons" style="display:flex; gap:12px;">
+                        <button id="unlockDoorBtn" class="btn btn-success"><i class="fas fa-unlock"></i> Mở Khóa</button>
+                        <button id="lockDoorBtn" class="btn btn-danger"><i class="fas fa-lock"></i> Khóa Cửa</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="rooms-section">
+                <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>Quản lý theo Phòng</h2>
+                    <button id="addRoomBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm phòng mới</button>
+                </div>
+
+                <div class="rooms-grid" id="roomsGrid">
+                    </div>
+            </section>
+
+            <section class="system-status">
+                <h2>Trạng thái Hệ thống</h2>
+                <div class="status-grid">
+                    <div class="status-card online">
+                        <h4>Kết nối Internet</h4>
+                        <div class="status-indicator"></div>
+                        <span>Ổn định - 85 Mbps</span>
+                    </div>
+                    
+                    <div class="status-card online">
+                        <h4>Hub Trung tâm</h4>
+                        <div class="status-indicator"></div>
+                        <span>Đang hoạt động</span>
+                    </div>
+                    
+                    <div class="status-card warning">
+                        <h4>Pin Dự phòng</h4>
+                        <div class="status-indicator"></div>
+                        <span>Còn 15% - Cần sạc</span>
+                    </div>
+                    
+                    <div class="status-card online">
+                        <h4>Bảo mật</h4>
+                        <div class="status-indicator"></div>
+                        <span>Đã kích hoạt</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="editRoomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chỉnh sửa tên phòng</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editRoomForm">
+                    <div class="form-group">
+                        <label for="editRoomName">Tên phòng mới</label>
+                        <input type="text" id="editRoomName" required placeholder="Nhập tên mới...">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancelEditRoom">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="addRoomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thêm phòng mới</h3>
+                <span class="close" id="closeAddRoomModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addRoomForm">
+                    <div class="form-group">
+                        <label for="newRoomId">Mã phòng (Room ID)</label>
+                        <input type="text" id="newRoomId" required placeholder="vd: bedroom_02" pattern="[a-zA-Z0-9_]+">
+                        <small style="color:#94a3b8; font-size:0.8rem;">
+                            Phải khớp CHÍNH XÁC với room_id đã cấu hình trong firmware ESP32 (chỉ chữ thường, số, gạch dưới).
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="newRoomName">Tên hiển thị</label>
+                        <input type="text" id="newRoomName" required placeholder="vd: Phòng Ngủ 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="newRoomType">Loại phòng (quyết định giao diện Dashboard)</label>
+                        <select id="newRoomType" required>
+                            <option value="BEDROOM">Phòng ngủ</option>
+                            <option value="KITCHEN">Nhà bếp</option>
+                            <option value="LIVING_ROOM">Phòng khách</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="newRoomMqtt">MQTT Topic prefix (tự động)</label>
+                        <input type="text" id="newRoomMqtt" disabled placeholder="home/<mã phòng>/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thiết bị trong phòng (tùy chọn)</label>
+                        <small style="color:#94a3b8; font-size:0.8rem; display:block; margin-bottom:8px;">
+                            Có thể tạo sẵn thiết bị ngay khi tạo phòng, hoặc thêm sau ở trang chi tiết phòng.
+                        </small>
+                        <div id="newRoomDevicesList" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;">
+                            </div>
+                        <button type="button" id="addDeviceRowBtn" class="btn btn-outline" style="width:100%;">
+                            <i class="fas fa-plus"></i> Thêm thiết bị
+                        </button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancelAddRoom">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Tạo phòng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <template id="deviceRowTemplate">
+        <div class="device-row" style="display:flex; gap:8px; align-items:center;">
+            <input type="text" class="device-name-input" placeholder="Tên thiết bị (vd: Đèn trần)" style="flex:2; padding:8px; border:1px solid #ddd; border-radius:6px;">
+            <select class="device-type-input" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:6px;">
+                <option value="light">Đèn</option>
+                <option value="fan">Quạt</option>
+                <option value="ac">Điều hòa</option>
+                <option value="sensor">Cảm biến</option>
+                <option value="socket">Ổ cắm</option>
+                <option value="other">Khác</option>
+            </select>
+            <button type="button" class="remove-device-row btn-icon" title="Xóa dòng" style="color:#e74c3c; flex-shrink:0;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </template>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

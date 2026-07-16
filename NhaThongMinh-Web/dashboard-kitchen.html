@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Bếp - Dashboard</title>
+    <link rel="stylesheet" href="css/components.css"> 
+    <link rel="stylesheet" href="css/dashboard.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-page">
+    
+    <aside class="sidebar">
+        <h2>Nhà Bếp <i class="fas fa-utensils"></i></h2>
+        <ul class="sidebar-menu" id="device-list-container">
+            <li><a href="admin.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>Trang Admin</span></a></li>
+            </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="dashboard-header">
+            <button id="logout-btn" class="btn btn-danger">Đăng xuất</button>
+        </header>
+
+        <div class="dashboard-sections">
+            
+            <section class="chart-section">
+                <div class="card chart-card" onclick="openDetailedModal('temp_hum')" style="cursor: pointer;">
+                    <h4 class="chart-title"><i class="fas fa-thermometer-half"></i> Nhiệt độ & Độ ẩm (Gần đây)</h4>
+                    <canvas id="tempHumChart"></canvas> 
+                    <p class="chart-hint">Nhấn vào để xem chi tiết 24h</p>
+                </div>
+                <div class="card chart-card" onclick="openDetailedModal('gas')" style="cursor: pointer;">
+                    <h4 class="chart-title"><i class="fas fa-burn"></i> Nồng độ Khí Gas (Gần đây)</h4>
+                    <canvas id="gasChart"></canvas>
+                    <p class="chart-hint">Nhấn vào để xem chi tiết 24h</p>
+                </div>
+            </section>
+
+            <section class="current-sensor-section">
+                <h3 class="section-title">Thông số hiện tại</h3>
+                <div class="grid-3"> 
+                    <div class="card current-sensor-card" data-sensor-id="temp">
+                        <div class="icon-wrapper"><i class="fas fa-thermometer-half sensor-icon"></i></div>
+                        <div class="sensor-data">
+                            <div class="sensor-label">Nhiệt độ</div>
+                            <div class="sensor-value" id="current-temp-value">--<span class="unit">°C</span></div>
+                        </div>
+                    </div>
+                    <div class="card current-sensor-card" data-sensor-id="humidity">
+                        <div class="icon-wrapper"><i class="fas fa-tint sensor-icon"></i></div>
+                        <div class="sensor-data">
+                            <div class="sensor-label">Độ ẩm</div>
+                            <div class="sensor-value" id="current-humidity-value">--<span class="unit">%</span></div>
+                        </div>
+                    </div>
+                    <div class="card current-sensor-card" data-sensor-id="gas">
+                        <div class="icon-wrapper" style="color: #f97316;"><i class="fas fa-fire sensor-icon"></i></div>
+                        <div class="sensor-data">
+                            <div class="sensor-label">Khí Gas</div>
+                            <div class="sensor-value" id="current-gas-value">--<span class="unit">ppm</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="automation-schedule-section">
+                <div class="card automation-card">
+                    <form id="automationForm"> 
+                        <h4 class="chart-title"><i class="fas fa-robot"></i> Tự động hóa</h4>
+                        <p class="section-description">Cài đặt ngưỡng an toàn cho nhà bếp.</p>
+                        <div id="automation-inputs-container" class="automation-rules"></div>
+                        <div style="margin-top: 15px;">
+                            <button type="submit" class="btn btn-primary" id="saveAutomationBtn"><i class="fas fa-save"></i> Lưu Cài Đặt</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card schedule-card">
+                    <form id="scheduleForm">
+                        <h4 class="chart-title"><i class="fas fa-clock"></i> Hẹn giờ Tắt</h4>
+                        <p class="section-description">Thiết bị sẽ tự động tắt vào giờ này.</p>
+                        <div class="schedule-items">
+                            <div class="schedule-item">
+                                <input type="time" id="scheduleTime1" class="time-input" required>
+                                <div class="time-action">
+                                    <label for="scheduleDevice1">Chọn thiết bị:</label>
+                                    <select id="scheduleDevice1" class="device-select" required>
+                                        <option value="none">-- Chọn thiết bị --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="saveScheduleBtn"><i class="fas fa-save"></i> Lưu Lịch Hẹn</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <div id="chartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Chi tiết dữ liệu 24h</h3>
+            <div class="modal-chart-container">
+                <canvas id="modalChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/dashboard-kitchen.js"></script>
+</body>
+</html>

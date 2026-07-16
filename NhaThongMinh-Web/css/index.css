@@ -1,0 +1,210 @@
+/* index.css - Style riêng cho trang chủ */
+
+/* Đẩy nội dung xuống để không bị che bởi Navbar cố định */
+main { margin-top: 70px; }
+
+/* ===== HERO SECTION (PHẦN INTRO ĐẦU TRANG) ===== */
+.hero {
+    position: relative; 
+    color: white; 
+    padding: 6rem 0 8rem;
+    min-height: 90vh; 
+    display: flex; 
+    align-items: center;
+    background: #000; 
+    overflow: hidden;
+}
+
+/* Video nền */
+.hero-video {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1; opacity: 0.6; /* Làm tối video để chữ rõ hơn */
+}
+
+/* Lớp phủ màu Gradient lên trên video */
+.hero::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%);
+    z-index: 2;
+}
+
+/* --- [QUAN TRỌNG] CĂN CHỈNH NỘI DUNG SANG TRÁI --- */
+.hero-container {
+    position: relative; z-index: 3; 
+    max-width: 1400px; /* Tăng độ rộng khung chứa */
+    width: 100%;       
+    margin: 0 auto;
+    padding: 0 2rem;   
+    
+    display: flex; 
+    align-items: center; 
+    height: 100%;
+    
+    /* flex-start: Đẩy toàn bộ khối nội dung về đầu dòng (Bên trái) */
+    justify-content: flex-start; 
+}
+
+.hero-content {
+    max-width: 650px; /* Giới hạn chiều rộng đoạn văn bản */
+    text-align: left; /* Căn lề trái cho chữ */
+    
+    /* Đảm bảo margin bên trái là 0 để sát lề */
+    margin-right: auto; 
+    margin-left: 0;
+}
+
+.hero-title {
+    font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.highlight { color: #f59e0b; } /* Màu vàng nhấn mạnh */
+
+.hero-description {
+    font-size: 1.25rem; margin-bottom: 2.5rem; opacity: 0.9; 
+    max-width: 600px; line-height: 1.6;
+    margin-left: 0; /* Không căn giữa */
+}
+
+.hero-buttons {
+    display: flex; gap: 1rem; 
+    justify-content: flex-start; /* Căn trái các nút bấm */
+    margin-bottom: 3rem; flex-wrap: wrap;
+}
+
+/* Số liệu thống kê (5000+, 99.9%...) */
+.hero-stats {
+    display: flex; gap: 3rem; 
+    justify-content: flex-start; /* Căn trái */
+    border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem;
+}
+.stat { 
+    text-align: left; /* Căn trái chữ bên trong từng cột số liệu */
+}
+.stat-number { display: block; font-size: 2rem; font-weight: 700; }
+.stat-label { font-size: 0.9rem; opacity: 0.8; }
+
+/* ===== FEATURES SECTION (TÍNH NĂNG) ===== */
+.features {
+    padding: 5rem 0;
+    background: #f8fafc; /* Nền xám rất nhạt */
+}
+
+.section-title { 
+    text-align: center; 
+    font-size: 2.5rem; 
+    
+    /* [SỬA] Tăng khoảng cách từ 3rem lên 5rem (hoặc 6rem) */
+    margin-bottom: 5rem; 
+    
+    color: var(--text-primary);
+    
+    /* [THÊM] Đảm bảo tiêu đề luôn nằm trên các phần tử khác nếu lỡ có va chạm */
+    position: relative;
+    z-index: 10;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); /* Bóng đổ rất nhẹ */
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15); /* Bóng đổ màu xanh khi hover */
+    border-color: rgba(37, 99, 235, 0.1);
+}
+
+/* Hộp chứa Icon */
+.icon-box {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.5rem;
+    background: rgba(37, 99, 235, 0.1); /* Nền xanh nhạt */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color); /* Icon màu xanh đậm */
+    font-size: 1.8rem;
+    transition: 0.3s;
+}
+
+.feature-card:hover .icon-box {
+    background: var(--primary-color); /* Hover thì đảo màu nền */
+    color: white; /* Icon thành màu trắng */
+    transform: rotateY(180deg); /* Hiệu ứng xoay icon */
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: #1e293b;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ===== CTA SECTION (KÊU GỌI HÀNH ĐỘNG) ===== */
+.cta {
+    padding: 5rem 0; text-align: center; background: #1e293b; color: white;
+}
+.cta h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+.cta p { font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9; }
+
+/* ===== FOOTER (CHÂN TRANG) ===== */
+.footer { background: #0f172a; color: white; padding: 4rem 0 2rem; }
+.footer-content {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem;
+}
+.footer-section h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+.footer-section h4 { margin-bottom: 1rem; color: #94a3b8; }
+.footer-section ul { list-style: none; }
+.footer-section a { color: #cbd5e1; text-decoration: none; line-height: 2; transition: 0.3s; }
+.footer-section a:hover { color: white; }
+
+/* ===== RESPONSIVE (MOBILE) ===== */
+/* Khi màn hình nhỏ hơn 768px (Điện thoại/Tablet dọc) -> Tự động căn giữa lại cho đẹp */
+@media (max-width: 768px) {
+    .hero { padding: 4rem 0 6rem; }
+    
+    .hero-container { 
+        justify-content: center; /* Căn giữa container */
+        padding: 0 1rem;
+    }
+    
+    .hero-content { 
+        text-align: center; /* Căn giữa chữ */
+        margin-right: auto;
+        margin-left: auto; 
+    }
+    
+    .hero-description { margin-left: auto; margin-right: auto; }
+    
+    .hero-buttons { 
+        justify-content: center; /* Căn giữa nút */
+        flex-direction: column; /* Xếp dọc nút */
+    }
+    
+    .hero-stats { 
+        justify-content: center; /* Căn giữa số liệu */
+        gap: 1.5rem;
+    }
+    .stat { text-align: center; }
+    
+    .btn-large { width: 100%; }
+}

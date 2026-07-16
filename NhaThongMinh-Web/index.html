@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHome - Trang Chủ</title>
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.svg" alt="SmartHome">
+                <span>SmartHome</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin.html" class="nav-link" id="nav-admin-link">Quản Trị</a>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link btn-login" id="nav-login-btn">Đăng Nhập</a>
+                </li>
+            </ul>
+
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="nav-overlay"></div>
+
+    <div id="logout-popup-overlay" class="logout-popup-overlay"></div>
+    <div id="logout-popup" class="logout-popup">
+        <h3>🚪 Xác Nhận Đăng Xuất</h3>
+        <p>Bạn có chắc muốn đăng xuất khỏi hệ thống?</p>
+        <div class="logout-popup-buttons">
+            <button id="cancel-logout" class="logout-popup-btn cancel">Hủy</button>
+            <button id="confirm-logout" class="logout-popup-btn confirm">Đăng Xuất</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <video class="hero-video" autoplay muted loop playsinline poster="images/video-poster.jpg">
+                <source src="videos/SmartHome.mp4" type="video/mp4">
+                <source src="videos/SmartHome.webm" type="video/webm">
+                <img src="images/hero-fallback.jpg" alt="Smart Home Background">
+            </video>
+
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Biến Ngôi Nhà Thành<br><span class="highlight">Thông Minh</span></h1>
+                    <p class="hero-description">
+                        Điều khiển mọi thiết bị trong nhà từ xa, tạo kịch bản tự động 
+                        và tiết kiệm năng lượng với SmartHome.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-glass-primary btn-large action-btn">
+                            Bắt Đầu Ngay 
+                        </a>
+                        <a href="#features" class="btn btn-glass-secondary btn-large">
+                            Tìm Hiểu Thêm
+                        </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-label">Gia đình sử dụng</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label">Độ ổn định</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Hỗ trợ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Tính Năng Nổi Bật</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Điều Khiển Thông Minh</h3>
+                        <p>Điều khiển đèn, điều hòa, rèm cửa từ xa qua ứng dụng mọi lúc mọi nơi.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Lập Lịch Tự Động</h3>
+                        <p>Thiết lập lịch trình hoạt động cho các thiết bị, giúp cuộc sống tiện nghi hơn.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Bảo Mật An Toàn</h3>
+                        <p>Hệ thống an ninh thông minh với cảnh báo tức thì khi có sự cố.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Theo Dõi Tiêu Thụ</h3>
+                        <p>Giám sát và tối ưu hóa năng lượng sử dụng qua biểu đồ trực quan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta">
+            <div class="container">
+                <h2>Sẵn sàng trải nghiệm ngôi nhà thông minh?</h2>
+                <p>Đăng ký ngay để bắt đầu điều khiển ngôi nhà của bạn</p>
+                <button class="btn btn-large action-btn">Đăng Nhập / Đăng Ký</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SmartHome</h3>
+                    <p>Giải pháp nhà thông minh toàn diện cho gia đình Việt</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Kết</h4>
+                    <ul>
+                        <li><a href="index.html">Trang Chủ</a></li>
+                        <li><a href="admin.html">Quản trị</a></li>
+                        <li><a href="login.html" class="footer-login-link">Đăng Nhập</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ Trợ</h4>
+                    <ul>
+                        <li><a href="#">Hướng Dẫn</a></li>
+                        <li><a href="#" id="footer-contact-link">Liên Hệ</a></li>
+                        <li><a href="#">Điều Khoản</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <div id="contact-popup-overlay" class="logout-popup-overlay"></div>
+    <div id="contact-popup" class="logout-popup" style="text-align: left; max-width: 400px;">
+        <h3 style="margin-bottom: 15px; text-align: center; color: var(--primary-color);">Thông Tin Liên Hệ</h3>
+        <div class="contact-list" style="margin-bottom: 20px;">
+            <div class="contact-item" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
+                <strong>Phan Hoàng Hạc</strong><br>
+                <span style="color: #666;">Email: 23139013@student.hcmute.edu.vn</span>
+            </div>
+            <div class="contact-item" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
+                <strong>Cao Như Ý</strong><br>
+                <span style="color: #666;">Email: 23139052@student.hcmute.edu.vn</span>
+            </div>
+            <div class="contact-item">
+                <strong>Hồ Bảo Việt</strong><br>
+                <span style="color: #666;">Email: 23139050@student.hcmute.edu.vn</span> </div>
+        </div>
+        <div style="text-align: center;">
+            <button id="close-contact-popup" class="logout-popup-btn cancel" style="width: 100%;">Đóng</button>
+        </div>
+    </div>
+    
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>

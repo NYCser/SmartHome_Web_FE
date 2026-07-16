@@ -1,0 +1,176 @@
+/* css/login.css */
+
+/* === CẤU TRÚC TRANG (LAYOUT) === */
+.auth-page {
+    /* Background Gradient Tím Xanh */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Căn giữa khung đăng nhập */
+.auth-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* === THẺ ĐĂNG NHẬP (CARD STYLE) === */
+.auth-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-lg); /* Bóng đổ lớn tạo độ nổi */
+    width: 100%;
+    max-width: 400px;
+    /* Hiệu ứng xuất hiện mượt mà */
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.auth-header h1 { margin-bottom: 0.5rem; }
+.auth-header p { color: var(--text-secondary); }
+
+/* === FORM INPUTS === */
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+/* Khi click vào ô nhập */
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Các tùy chọn (Checkbox, Quên mật khẩu) */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* === ĐƯỜNG KẺ PHÂN CÁCH (OR DIVIDER) === */
+.auth-divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+/* Đường kẻ ngang */
+.auth-divider::before {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0;
+    height: 1px; background: var(--border-color);
+}
+
+/* Chữ "hoặc" nằm đè lên đường kẻ */
+.auth-divider span {
+    background: white;
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    position: relative; /* Để nằm trên lớp before */
+}
+
+/* === NÚT GOOGLE === */
+.btn-google {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    gap: 10px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-google:hover {
+    background: #f8f9fa;
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    transform: none !important; /* Reset vị trí để không bị lệch */
+    margin: 0;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    .btn-google {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    .btn-google img { width: 16px; height: 16px; }
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+/* Class ẩn hiện */
+.hidden { display: none; }
+
+/* === THÔNG BÁO LỖI/THÀNH CÔNG (FEEDBACK) === */
+.error-message {
+    background: #fee; border: 1px solid #fcc; color: #c33;
+    padding: 12px; border-radius: 8px; margin: 15px 0;
+    text-align: center; font-weight: 500; font-size: 0.9rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.success-message {
+    background: #efe; border: 1px solid #cfc; color: #363;
+    padding: 12px; border-radius: 8px; margin: 15px 0;
+    text-align: center; font-weight: 500; font-size: 0.9rem;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Lỗi hiển thị dưới từng ô input */
+.field-error {
+    color: #dc2626; font-size: 0.85rem; margin-top: 6px; display: block;
+}
+
+/* Trạng thái input khi có lỗi */
+.form-group.error input {
+    border-color: #dc2626;
+    background-color: #fef2f2;
+}
+
+/* Hiệu ứng Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

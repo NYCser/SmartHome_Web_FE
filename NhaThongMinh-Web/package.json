@@ -1,0 +1,26 @@
+{
+  "name": "nhathongminh-myhome",
+  "version": "1.0.0",
+  "description": "SmartHome Web Dashboard — Netlify static site, no build step required",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . --listen 3000",
+    "lint": "echo \"No linter configured\""
+  },
+  "keywords": ["smarthome", "iot", "firebase", "raspberry-pi"],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "notes": {
+    "firebase": "Loaded via CDN (gstatic.com/firebasejs/10.7.1) — no npm install needed",
+    "deploy": "Upload toàn bộ thư mục lên Netlify, không cần build command",
+    "capacitor": "Đã xóa — không dùng mobile app. Thêm lại nếu cần sau.",
+    "package-lock": "Chạy 'npm install' để tạo lại nếu cần"
+  }
+}

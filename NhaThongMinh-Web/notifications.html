@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Báo - SmartHome Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/notifications.css">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="admin-header" style="
+        background: #fff; padding: 12px 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        display: flex; justify-content: space-between; align-items: center;
+        position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e8ecf0;
+    ">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-home" style="color: #4e73df; font-size: 1.4rem;"></i>
+            <span style="font-weight: 700; font-size: 1.1rem; color: #2d3748;">SmartHome Admin</span>
+        </div>
+
+        <nav style="display: flex; align-items: center; gap: 20px;">
+            <a href="admin.html" style="text-decoration:none; color:#718096; font-size:0.9rem; font-weight:500; transition: color 0.2s;"
+               onmouseover="this.style.color='#4e73df'" onmouseout="this.style.color='#718096'">
+                <i class="fas fa-arrow-left"></i> Trang Chủ
+            </a>
+            <a href="#" style="text-decoration:none; color:#4e73df; font-size:0.9rem; font-weight:700;
+               border-bottom: 2px solid #4e73df; padding-bottom: 2px;">
+                <i class="fas fa-bell"></i> Thông Báo
+            </a>
+            <span id="user-email" style="font-size:0.8rem; color:#aab; padding: 4px 10px;
+                  background: #f8f9fc; border-radius: 20px;"></span>
+            <button id="logout-btn" style="
+                padding: 6px 14px; background: #fff; border: 1px solid #e8ecf0;
+                border-radius: 8px; color: #718096; cursor: pointer; font-size: 0.85rem;
+                display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+            " onmouseover="this.style.background='#fef0f0';this.style.color='#e74c3c'"
+               onmouseout="this.style.background='#fff';this.style.color='#718096'">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </button>
+        </nav>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="notifications-page">
+        <div class="container">
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-icon primary"><i class="fas fa-bell"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="stat-total">—</div>
+                        <div class="stat-label">Tổng thông báo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon warning"><i class="fas fa-envelope"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="stat-unread">—</div>
+                        <div class="stat-label">Chưa đọc</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon danger"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="stat-danger">—</div>
+                        <div class="stat-label">Cảnh báo nguy hiểm</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Card + Filters -->
+            <div class="notifications-header-card">
+                <div class="header-top">
+                    <h2><i class="fas fa-bell" style="color:#4e73df; margin-right:8px;"></i>THÔNG BÁO TỔNG QUAN</h2>
+                    <div class="header-actions">
+                        <button id="markAllReadBtn" class="btn btn-primary-soft">
+                            <i class="fas fa-check-double"></i> Đánh dấu tất cả đã đọc
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <p class="filter-label">BỘ LỌC THÔNG MINH</p>
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <select id="filterType" class="form-select">
+                                <option value="all">Tất cả loại</option>
+                                <option value="fire">🔥 Cháy</option>
+                                <option value="gas">💨 Gas</option>
+                                <option value="intrusion">🚨 Xâm nhập</option>
+                                <option value="access">🚪 Ra/Vào cửa</option>
+                                <option value="system">🖥 Hệ thống</option>
+                                <option value="login">👤 Đăng nhập</option>
+                                <option value="automation">🤖 Tự động hóa</option>
+                                <option value="ota">⬇️ OTA Update</option>
+                            </select>
+
+                            <select id="filterStatus" class="form-select">
+                                <option value="all">Tất cả trạng thái</option>
+                                <option value="unread">📩 Chưa đọc</option>
+                                <option value="read">✅ Đã đọc</option>
+                            </select>
+
+                            <button id="clearFilter" class="btn-link">
+                                <i class="fas fa-times"></i> Xóa bộ lọc
+                            </button>
+                        </div>
+
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm thông báo...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result count -->
+            <div class="result-info">
+                <span id="result-count" style="font-size:0.85rem;color:#718096;"></span>
+            </div>
+
+            <!-- Notifications List -->
+            <div class="notifications-list-container">
+                <div id="fullNotifyList" class="full-notify-list">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu từ hệ thống...
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="module" src="js/notifications.js"></script>
+</body>
+</html>

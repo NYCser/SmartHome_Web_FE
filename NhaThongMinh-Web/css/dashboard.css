@@ -1,0 +1,472 @@
+/* --- css/dashboard.css --- */
+/* 1. CẤU TRÚC LAYOUT CHÍNH */
+body.admin-page {
+    display: flex;
+    background-color: var(--bg-secondary);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- Sidebar (Thanh bên trái) --- */
+.sidebar {
+    width: 260px;
+    background-color: white; 
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+.sidebar h2 {
+    color: var(--primary-color);
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    flex-shrink: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 15px;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto; /* Cuộn dọc nếu danh sách dài */
+}
+
+/* Custom Scrollbar cho Sidebar */
+.sidebar-menu::-webkit-scrollbar { width: 6px; }
+.sidebar-menu::-webkit-scrollbar-track { background: transparent; }
+.sidebar-menu::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+.sidebar-menu::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.sidebar-menu li { margin-bottom: 10px; }
+
+.sidebar-menu a, 
+.sidebar-menu .device-control {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-weight: 500;
+    background: transparent;
+}
+
+.sidebar-menu a:hover {
+    background-color: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.sidebar-menu a i { margin-right: 12px; font-size: 1.1rem; }
+
+/* Item điều khiển thiết bị trong Sidebar */
+.sidebar-menu .device-control {
+    justify-content: space-between;
+    background: #f8fafc;
+    border: 1px solid transparent;
+}
+
+.sidebar-menu .device-control:hover {
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* --- Main Content (Nội dung chính) --- */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 2rem;
+    width: calc(100% - 260px);
+}
+
+.dashboard-header {
+    display: flex; 
+    justify-content: flex-end; 
+    margin-bottom: 2rem;
+}
+
+.dashboard-sections { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2rem; 
+}
+
+/* 2. CÁC CARD & SECTION */
+.card {
+    background: white; padding: 1.5rem;
+    border-radius: 1rem; box-shadow: var(--shadow);
+}
+
+/* --- Section: Biểu đồ --- */
+.chart-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    height: 350px; 
+    display: flex; flex-direction: column;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.chart-title { 
+    margin-bottom: 1rem; 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: var(--text-primary); 
+}
+
+.chart-card canvas { 
+    flex: 1; 
+    width: 100% !important; 
+    min-height: 0; 
+}
+
+.chart-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    margin-top: 10px;
+    font-style: italic;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.chart-card:hover .chart-hint { opacity: 0.8; text-decoration: underline; }
+
+/* --- Section: Cảm biến hiện tại --- */
+.current-sensor-section .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.current-sensor-section .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.current-sensor-card {
+    display: flex; align-items: center; gap: 1.5rem;
+}
+
+.icon-wrapper {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--bg-secondary); color: var(--primary-color);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+}
+
+.sensor-data .sensor-label { font-size: 0.9rem; color: var(--text-secondary); }
+.sensor-data .sensor-value { font-size: 2rem; font-weight: bold; color: var(--text-primary); }
+.sensor-data .unit { font-size: 1rem; font-weight: normal; margin-left: 5px; color: var(--text-secondary); }
+
+/* --- Section: Automation & Schedule --- */
+.automation-schedule-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+
+.section-description {
+    font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;
+}
+
+/* Các thành phần Form */
+.automation-rule {
+    display: flex; align-items: center; margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+.automation-rule i { width: 25px; color: var(--primary-color); }
+
+.threshold-input {
+    width: 70px; padding: 5px 10px; margin: 0 10px;
+    border: 1px solid var(--border-color, #e2e8f0); border-radius: 6px;
+    text-align: center; font-weight: 600;
+}
+
+.schedule-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem; border: 1px dashed var(--border-color, #e2e8f0);
+    border-radius: 8px; margin-bottom: 1rem;
+}
+
+.time-input, .device-select {
+    border: 1px solid #e2e8f0; padding: 5px; border-radius: 6px;
+}
+.time-input { font-size: 1.2rem; font-weight: bold; color: var(--primary-color); }
+.device-select { padding: 8px; min-width: 150px; }
+
+/* Nút gạt (Switch) */
+.device-control .switch {
+    position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0;
+}
+.device-control .switch input { opacity: 0; width: 0; height: 0; }
+.device-control .slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #cbd5e1; transition: .3s; border-radius: 24px;
+}
+.device-control .slider:before {
+    position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.device-control input:checked + .slider { background-color: var(--primary-color); }
+.device-control input:checked + .slider:before { transform: translateX(20px); }
+
+/* 3. MODAL (POPUP CHI TIẾT) */
+.modal {
+    display: none; 
+    position: fixed; z-index: 9999; 
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    padding-top: 50px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 25px;
+    border: none;
+    width: 90%; max-width: 900px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    position: relative;
+    max-height: 90vh; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Cho phép cuộn nếu quá dài */
+}
+
+.close-modal {
+    color: #aaa; position: absolute; right: 20px; top: 15px;
+    font-size: 28px; font-weight: bold; cursor: pointer;
+}
+.close-modal:hover { color: #333; }
+
+.modal-chart-container {
+    width: 100%; height: 450px; margin-top: 20px;
+}
+#modalTitle { margin: 0; color: var(--text-primary); font-size: 1.4rem; }
+
+/* =========================================
+   5. SETTINGS PAGE STYLES (Cấu hình Wifi & RFID)
+   (Thêm mới cho trang Settings)
+   ========================================= */
+
+/* Box trạng thái Wifi */
+.wifi-status-box {
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Badge trạng thái (Xanh, Vàng, Đỏ) */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+.status-badge.success { background-color: #10b981; } /* Connected */
+.status-badge.warning { background-color: #f59e0b; } /* Connecting */
+.status-badge.error { background-color: #ef4444; }   /* Disconnected */
+.status-badge.connecting { background-color: #3b82f6; } /* Info/Loading */
+
+/* Form thêm Wifi */
+.add-wifi-form {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px dashed #cbd5e1;
+}
+
+.add-wifi-form h5 { margin-top: 0; margin-bottom: 10px; color: var(--text-primary); }
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input-field {
+    padding: 10px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    flex: 1;
+    min-width: 150px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.input-field:focus { border-color: var(--primary-color); }
+
+.hint-text {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 8px;
+}
+
+/* Bảng dữ liệu Settings (Wifi List / RFID List) */
+.saved-networks, .rfid-list-container {
+    overflow-x: auto; /* Cuộn ngang nếu bảng quá rộng */
+}
+
+.settings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+.settings-table th, .settings-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.settings-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.settings-table tr:hover { background-color: #f8fafc; }
+
+/* Nút nhỏ trong bảng */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    color: white;
+    transition: opacity 0.2s;
+}
+.btn-sm:hover { opacity: 0.9; }
+.btn-info { background-color: #3b82f6; }     /* Nút Kết nối */
+.btn-success { background-color: #10b981; }  /* Nút Kích hoạt */
+.btn-danger { background-color: #ef4444; }   /* Nút Xóa */
+
+/* RFID Controls */
+.rfid-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.scan-status {
+    color: #f59e0b;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: blink 1.5s infinite;
+    background: #fffbeb;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #fcd34d;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+/* Modal Edit RFID (Nhỏ hơn modal biểu đồ) */
+#editCardModal .modal-content {
+    max-width: 400px;
+}
+
+/* =========================================
+   6. RESPONSIVE (MOBILE & TABLET) 
+   ========================================= */
+
+/* Tablet (Màn hình vừa) */
+@media (max-width: 1024px) {
+    .chart-section, 
+    .automation-schedule-section {
+        grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+    }
+    
+    .current-sensor-section .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile (Màn hình điện thoại) */
+@media (max-width: 768px) {
+    /* Layout dọc */
+    body.admin-page { flex-direction: column; }
+    
+    /* Sidebar trên Mobile: Thu gọn thành thanh ngang cuộn được */
+    .sidebar {
+        width: 100%; height: auto; position: relative;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 200;
+    }
+    .sidebar h2 { padding: 15px; font-size: 1.2rem; }
+    .sidebar-menu {
+        display: flex; gap: 10px; overflow-x: auto; padding: 10px 15px;
+        white-space: nowrap; /* Không xuống dòng */
+    }
+    .sidebar-menu li { flex-shrink: 0; margin: 0; }
+    
+    /* Main Content */
+    .main-content {
+        margin-left: 0; width: 100%; padding: 1rem;
+    }
+    
+    /* Giảm chiều cao Biểu đồ Dashboard chính */
+    .chart-card {
+        height: 280px; /* Thấp hơn desktop */
+        padding: 15px;
+    }
+    
+    /* Sensor Grid */
+    .current-sensor-section .grid-2,
+    .current-sensor-section .grid-3 { grid-template-columns: 1fr; }
+    
+    /* Modal trên Mobile */
+    .modal-content {
+        width: 95%; margin: 10% auto;
+        padding: 15px;
+    }
+    .modal-chart-container {
+        height: 300px; /* Biểu đồ trong modal nhỏ hơn */
+    }
+    .close-modal { top: 5px; right: 15px; font-size: 32px; }
+
+    /* Nút Logout */
+    .dashboard-header { margin-bottom: 1rem; }
+    #logout-btn { width: 100%; }
+
+    /* --- Responsive cho Settings Page --- */
+    .inline-form {
+        flex-direction: column;
+        align-items: stretch; /* Input full width */
+    }
+    
+    .settings-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto; /* Cuộn ngang bảng */
+        white-space: nowrap; /* Giữ nội dung thẳng hàng khi cuộn */
+    }
+    
+    .wifi-status-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
